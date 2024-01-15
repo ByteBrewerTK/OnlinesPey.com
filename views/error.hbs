@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Not Found</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #212121;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .error-container {
+      display: inline-block;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 150px;
+      margin: 0;
+    }
+
+    p {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .astronaut {
+      background: url('astronaut.png') no-repeat;
+      background-size: contain;
+      width: 150px;
+      height: 150px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: floatAstronaut 3s ease-in-out infinite;
+    }
+
+    .moon {
+      background: url('moon.png') no-repeat;
+      background-size: contain;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 30%;
+      left: 80%;
+      transform: translate(-50%, -50%);
+      animation: rotateMoon 3s ease-in-out infinite;
+    }
+
+    button {
+      background-color: #3498db;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    @keyframes floatAstronaut {
+      0%, 100% {
+        transform: translate(-50%, -50%) translateY(-10px);
+      }
+      50% {
+        transform: translate(-50%, -50%) translateY(10px);
+      }
+    }
+
+    @keyframes rotateMoon {
+      0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      50% {
+        transform: translate(-50%, -50%) rotate(180deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="error-container">
+      <h1>404</h1>
+      <p>Page Not Found</p>
+      <div class="astronaut"></div>
+      <div class="moon"></div>
+      <button onclick="goToHome()">Go to Home</button>
+    </div>
+  </div>
+
+  <script>
+    function goToHome() {
+      // Add the URL of your home page
+      window.location.href = "/";
+    }
+  </script>
+</body>
+</html>

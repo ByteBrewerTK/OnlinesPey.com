@@ -1,0 +1,26 @@
+{
+	"name": "onlinespey",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node src/app.js",
+		"dev": "nodemon src/app.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^5.1.1",
+		"body-parser": "^1.20.2",
+		"cookie-parser": "^1.4.6",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"express-rate-limit": "^7.1.5",
+		"hbs": "^4.2.0",
+		"jsonwebtoken": "^9.0.2",
+		"mongoose": "^8.0.3",
+		"nodemon": "^3.0.2"
+	}
+}
