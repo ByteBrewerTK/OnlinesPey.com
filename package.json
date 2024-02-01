@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node src/app.js",
+		"start": "./node_modules/.bin/netlify-lambda serve src",
+		"build": "./node_modules/.bin/netlify-lambda build src",
 		"dev": "nodemon src/app.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -14,12 +15,16 @@
 	"dependencies": {
 		"body-parser": "^1.20.2",
 		"cookie-parser": "^1.4.6",
+		"cors": "^2.8.5",
 		"dotenv": "^16.3.1",
 		"express": "^4.18.2",
 		"express-rate-limit": "^7.1.5",
 		"hbs": "^4.2.0",
 		"jsonwebtoken": "^9.0.2",
 		"mongoose": "^8.0.3",
-		"nodemon": "^3.0.2"
+		"netlify-cli": "^17.14.0",
+		"netlify-lambda": "^2.0.16",
+		"nodemon": "^3.0.3",
+		"serverless-http": "^3.2.0"
 	}
 }

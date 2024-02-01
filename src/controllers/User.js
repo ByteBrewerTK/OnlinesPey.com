@@ -11,7 +11,7 @@ exports.signUp = async (req, res) => {
 		if (!name || !email || !phone) {
 			return res.status(400).json({
 				success: false,
-				message: "fields can't be empty",
+				message: "Fields can't be empty",
 			});
 		}
 
@@ -19,7 +19,8 @@ exports.signUp = async (req, res) => {
 
 		if (userDetails) {
 			return res.status(400).json({
-				message: "user already exists",
+				success: false,
+				message: "User already exists",
 			});
 		}
 
@@ -36,7 +37,7 @@ exports.signUp = async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({
 			success: false,
-			message: "Error occured while creating user",
+			message: "Error occurred while creating user",
 			error: error.message,
 		});
 	}
@@ -48,19 +49,25 @@ exports.login = async (req, res) => {
 
 		const userDetails = await User.findOne({ phone: phone });
 
-		if(!phone || !password) {
-			let errorMessage = "field can't be empty";
-			return res.status(404).render("auth", { errorMessage });
+		if (!phone || !password) {
+			return res.status(400).json({
+				success: false,
+				message: "Phone and password are required",
+			});
 		}
 
 		if (!userDetails) {
-			let errorMessage = "user not found";
-			return res.status(404).render("auth", { errorMessage });
+			return res.status(404).json({
+				success: false,
+				message: "User not found",
+			});
 		}
 
 		if (userDetails.password !== password) {
-			let errorMessage = "incorrect password";
-			return res.status(401).render("auth", { errorMessage });
+			return res.status(401).json({
+				success: false,
+				message: "Incorrect password",
+			});
 		}
 
 		const payload = {
@@ -71,20 +78,45 @@ exports.login = async (req, res) => {
 
 		jwt.sign(payload, SECRETE_KEY, { expiresIn: "1h" }, (err, token) => {
 			if (err) {
-				let errorMessage = "internal error";
 				console.error(err);
-				return res.status(5000).render("auth", { errorMessage });
+				return res.status(500).json({
+					success: false,
+					message: "Internal error",
+					error: err.message,
+				});
 			}
 			res.cookie("authToken", token, {
-				httpOnly: true, // Make the cookie accessible only via HTTP(S)
-				maxAge: 6000, // Cookie expiration time
+				httpOnly: true,
+				maxAge: 3600000, // 1 hour in milliseconds
 			});
 
-			return res.status(304).redirect("/services");
+			return res.status(200).json({
+				success: true,
+				message: "Successfully logged in",
+				accessToken: token,
+			});
 		});
 	} catch (error) {
 		console.error(error);
-		let errorMessage = "Internal error";
-		return res.status(500).render("auth", { errorMessage });
+		return res.status(500).json({
+			success: false,
+			message: "Internal error",
+			error: error.message,
+		});
+	}
+};
+exports.getAllUsers = async (req, res) => {
+	try {
+		// Assuming you are using Mongoose as the ODM
+		const users = await User.find();
+
+		// Return the list of users in the response
+		res.status(200).json({
+			success : true,
+			data : users,
+		});
+	} catch (error) {
+		console.error("Error fetching users:", error);
+		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
